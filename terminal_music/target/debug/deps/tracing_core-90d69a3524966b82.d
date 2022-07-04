@@ -1,0 +1,15 @@
+/home/kali/Terminal-music/terminal_music/target/debug/deps/tracing_core-90d69a3524966b82.rmeta: /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lib.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lazy.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/callsite.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/dispatcher.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/event.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/field.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/metadata.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/parent.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/span.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/stdlib.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/subscriber.rs
+
+/home/kali/Terminal-music/terminal_music/target/debug/deps/tracing_core-90d69a3524966b82.d: /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lib.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lazy.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/callsite.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/dispatcher.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/event.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/field.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/metadata.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/parent.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/span.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/stdlib.rs /root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/subscriber.rs
+
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lib.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/lazy.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/callsite.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/dispatcher.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/event.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/field.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/metadata.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/parent.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/span.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/stdlib.rs:
+/root/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-core-0.1.28/src/subscriber.rs:
