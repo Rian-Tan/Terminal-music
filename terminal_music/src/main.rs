@@ -2,6 +2,8 @@ use std::io;
 use rustube::VideoFetcher;
 use rustube::url::Url;
 use rustube::tokio;
+use symphonia::core::io::MediaSourceStream;
+
 
 #[tokio::main]
 
@@ -11,7 +13,7 @@ async fn main() {
     io::stdin()
         .read_line(&mut url)
         .expect("Failed to read line");
- 
+
     println!("{}", url);
 
     let urll = Url::parse(&url).unwrap();
@@ -22,15 +24,10 @@ async fn main() {
         .unwrap();
 
     let title = descrambler.video_title();
-    println!("Currently playing: {}", title); 
-    
-}
+    println!("Currently playing: {}", title);
+    let path_to_video = rustube::download_worst_quality(&url).await;
 
-/* fn get_url() -> String {
-    let mut url = String::new();
-    io::stdin()
-        .read_line(&mut url)
-        .expect("Failed to read line");
-    url
-} */
-//https://www.youtube.com/watch?v=PEnJbjBuxnw
+    let path = path_to_video.expect("file path not provided");
+    let src = std::fs::File::open(path).expect("failed to open media");
+    let _mss = MediaSourceStream::new(Box::new(src), Default::default());
+}
