@@ -1,2 +1,4 @@
 # Terminal-music
-private for now TODO: make it public
+simple and minimalistic terminal music player
+
+### TODO: File conversion
