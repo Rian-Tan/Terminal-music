@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 rustube = "0.4.0"
 tokio = { version = "1.19.2", features = ["rt", "rt-multi-thread", "macros"] }
-symphonia = "0.5.0"
+symphonia = { version = "0.5.0", features = ["mp3", "isomp4", "aac", "alac"] }
+audiotags = "0.2.7182"

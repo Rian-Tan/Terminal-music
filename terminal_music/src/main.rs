@@ -10,7 +10,6 @@ use symphonia::core::formats::FormatOptions;
 use symphonia::core::meta::MetadataOptions;
 use symphonia::core::probe::Hint;
 
-
 #[tokio::main]
 
 async fn main() {
@@ -33,7 +32,7 @@ async fn main() {
         .unwrap();
 
     let title = descrambler.video_title();
-    println!("\nCurrently playing: {}", title);
+    println!("\nCurrently in Queue: {}", title);
     println!("\nloading...");
     //let test_url = "https://www.youtube.com/watch?v=Z3xPIYHKSoI";
     /* println!("{}",&urll[32..]);
@@ -50,11 +49,11 @@ async fn main() {
         .unwrap()
         .download()
         .await;
-    println!("{:?}",  video_path);
-    
+    // println!("{:?}",  video_path);
+    println!("Done !");
+    println!("Currently playing: {title}");
     let path: String = format!("./{}.mp4", &url[32..43]);
-    println!("{}", path);
-    // TODO: convert mp4 to mp3
+    // println!("{}", path);  // testing
 
     /* symphonia */
     /* music      */
@@ -65,7 +64,7 @@ async fn main() {
     let mss = MediaSourceStream::new(Box::new(src), Default::default());
 
     let mut hint = Hint::new();
-    hint.with_extension("mp3");
+    hint.with_extension("mp4");
 
     let meta_opts: MetadataOptions = Default::default();
     let fmt_opts: FormatOptions = Default::default();
@@ -111,7 +110,7 @@ async fn main() {
             Err(err) => {
                 // A unrecoverable error occured, halt decoding.
                 panic!("{}", err);
-            }
+            } 
         };
 
         // Consume any new metadata that has been read since the last packet.
