@@ -3,12 +3,14 @@ use rustube::VideoFetcher;
 use rustube::url::Url;
 use rustube::tokio;
 use rustube::Video;
-use symphonia::core::io::MediaSourceStream;
-use symphonia::core::codecs::{DecoderOptions, CODEC_TYPE_NULL};
-use symphonia::core::errors::Error;
-use symphonia::core::formats::FormatOptions;
-use symphonia::core::meta::MetadataOptions;
-use symphonia::core::probe::Hint;
+use std::fs;
+use std::io::BufReader;
+use rodio::{Decoder, OutputStream, source::Source, Sink};
+use std::process::Stdio;
+use std::fs::File;
+use ffmpeg_cli::{FfmpegBuilder, File as file, Parameter};
+use futures::{future::ready, StreamExt};
+
 
 #[tokio::main]
 
@@ -44,105 +46,68 @@ async fn main() {
     let video_path = path_to_video
         .streams()
         .iter()
-        .filter(|stream| stream.includes_video_track && stream.includes_audio_track)
+        .filter(|stream| stream.includes_audio_track)
         .max_by_key(|stream| stream.quality_label)
         .unwrap()
-        .download()
+        .download_to("a.mp4")
         .await;
     // println!("{:?}",  video_path);
     println!("Done !");
     println!("Currently playing: {title}");
-    let path: String = format!("./{}.mp4", &url[32..43]);
+   // let path: String = format!("./{}.mp4", &url[32..43]);
+    //let final_Path = format!("./{}.mp3", &url[32..43]);
+    File::create("a.mp3")
+        .expect("Error encountered while creating file!");
+    let builder = FfmpegBuilder::new()
+        .stderr(Stdio::piped())
+        .option(Parameter::Single("nostdin"))
+        .option(Parameter::Single("y"))
+        .input(file::new("./a.mp4"))
+        .output(file::new("./a.mp3")
+            .option(Parameter::KeyValue("vcodec", "libx265"))
+            .option(Parameter::KeyValue("crf", "28")),
+    );
+            
+    
+    let ffmpeg = match builder.run().await{
+        Err(why) => panic!("{why}"),
+        Ok(ffmpeg) => ffmpeg,
+    };
+    ffmpeg
+        .progress
+        .for_each(|x| {
+            dbg!(x.unwrap());
+            ready(())
+        })
+        .await; 
+
+    let output = ffmpeg.process.wait_with_output().unwrap();
+    
+
     // println!("{}", path);  // testing
 
     /* symphonia */
     /* music      */
     /* section   */
     /* :D .      */   
+   
+    let (_stream, handle) = rodio::OutputStream::try_default().unwrap();
+    let sink = rodio::Sink::try_new(&handle).unwrap();
+
+    let file = std::fs::File::open("./a.mp3").unwrap();
+    sink.append(rodio::Decoder::new(BufReader::new(file)).unwrap());
+
+    sink.sleep_until_end();
     
-    let src = std::fs::File::open(path).expect("failed to open media");
-    let mss = MediaSourceStream::new(Box::new(src), Default::default());
+    // The sound plays in a separate audio thread,
+    // so we need to keep the main thread alive while it's playing.
+    std::thread::sleep(std::time::Duration::from_secs(5));
+    fs::remove_file("./a.mp4")
+        .expect("file could not be removed."); 
+    fs::remove_file("./a.mp3")
+        .expect("file could not be removed."); 
 
-    let mut hint = Hint::new();
-    hint.with_extension("mp4");
-
-    let meta_opts: MetadataOptions = Default::default();
-    let fmt_opts: FormatOptions = Default::default();
-
-    // Probe the media source.
-    let probed = symphonia::default::get_probe()
-        .format(&hint, mss, &fmt_opts, &meta_opts)
-        .expect("unsupported format");
-
-    // Get the instantiated format reader.
-    let mut format = probed.format;
-
-    // Find the first audio track with a known (decodeable) codec.
-    let track = format
-        .tracks()
-        .iter()
-        .find(|t| t.codec_params.codec != CODEC_TYPE_NULL)
-        .expect("no supported audio tracks");
-
-    // Use the default options for the decoder.
-    let dec_opts: DecoderOptions = Default::default();
-
-    // Create a decoder for the track.
-    let mut decoder = symphonia::default::get_codecs()
-        .make(&track.codec_params, &dec_opts)
-        .expect("unsupported codec");
-
-    // Store the track identifier, it will be used to filter packets.
-    let track_id = track.id;
-
-    // The decode loop.
-    loop {
-        // Get the next packet from the media format.
-        let packet = match format.next_packet() {
-            Ok(packet) => packet,
-            Err(Error::ResetRequired) => {
-                // The track list has been changed. Re-examine it and create a new set of decoders,
-                // then restart the decode loop. This is an advanced feature and it is not
-                // unreasonable to consider this "the end." As of v0.5.0, the only usage of this is
-                // for chained OGG physical streams.
-                unimplemented!();
-            }
-            Err(err) => {
-                // A unrecoverable error occured, halt decoding.
-                panic!("{}", err);
-            } 
-        };
-
-        // Consume any new metadata that has been read since the last packet.
-        while !format.metadata().is_latest() {
-            // Pop the old head of the metadata queue.
-            format.metadata().pop();
-
-            // Consume the new metadata at the head of the metadata queue.
-        }
-
-        // If the packet does not belong to the selected track, skip over it.
-        if packet.track_id() != track_id {
-            continue;
-        }
-
-        // Decode the packet into audio samples.
-        match decoder.decode(&packet) {
-            Ok(_decoded) => {
-                // Consume the decoded audio samples (see below).
-            }
-            Err(Error::IoError(_)) => {
-                // The packet failed to decode due to an IO error, skip the packet.
-                continue;
-            }
-            Err(Error::DecodeError(_)) => {
-                // The packet failed to decode due to invalid data, skip the packet.
-                continue;
-            }
-            Err(err) => {
-                // An unrecoverable error occured, halt decoding.
-                panic!("{}", err);
-            }
-        }
-    }
+    
 }
+
+//https://www.youtube.com/watch?v=ABvd67kdSzg
