@@ -11,7 +11,20 @@
 
 ## How to use this project:
 
-### Disclaimer: requires ffmpeg to be installed for it to run properly
+### Disclaimer: requires ffmpeg to be installed for it to run properly 
+
+on mac:
+```bash
+brew install ffmpeg
+```
+
+on linux:
+https://ffmpeg.org/download.html#build-linux
+
+on windows:
+https://ffmpeg.org/download.html#build-windows
+
+
 
 1. run the executable
 
