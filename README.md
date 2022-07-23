@@ -11,6 +11,8 @@
 
 ## How to use this project:
 
+### Disclaimer: requires ffmpeg to be installed for it to run properly
+
 1. run the executable
 
 ![step 1](./step1.png "run the executable")
