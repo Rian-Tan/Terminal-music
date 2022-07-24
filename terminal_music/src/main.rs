@@ -79,7 +79,7 @@ async fn main() {
             dbg!(x.unwrap());
             ready(())
         })
-        .await; 
+        .await;
 
     let output = ffmpeg.process.wait_with_output().unwrap();
     
