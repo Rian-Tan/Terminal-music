@@ -27,7 +27,7 @@ https://ffmpeg.org/download.html#build-windows
 
 
 1. run the executable
-
+you can find the executable on mega nz [here](https://mega.nz/file/qU1C1TKa#xKLqfSJkU1kHnhmzrmTIt_YwQA5LE3hPwQo2cKIbJnw)
 ![step 1](./step1.png "run the executable")
 
 2. get the video url from youtube
